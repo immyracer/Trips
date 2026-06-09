@@ -1282,6 +1282,19 @@ function toggle(header) {
   }
 }
 
+function loadKOTicket(input, slotId, label) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var slot = document.getElementById(slotId);
+    slot.innerHTML = '<div class="qs-name" style="font-size:0.75rem;">' + label + '</div><img src="' + e.target.result + '" style="width:100%;max-width:160px;border-radius:6px;display:block;margin:6px auto;cursor:zoom-in;image-rendering:pixelated;" onclick="openLightbox(this.src, \'' + label + '\')" title="Tap to enlarge for scanning">';
+    slot.style.cursor = 'default';
+    slot.onclick = null;
+  };
+  reader.readAsDataURL(file);
+}
+
 // open Day 0 on load
 openDay(0);
 
