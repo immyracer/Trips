@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option A — Cinematic</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;overflow:hidden}
+
+  .stage{position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:24px;
+    background:linear-gradient(200deg,#0b1b33 0%,#123c52 34%,#2f7180 58%,#c98a5e 82%,#e8b27c 100%);
+    background-size:180% 180%;animation:drift 22s ease-in-out infinite}
+  @keyframes drift{0%{background-position:0% 40%}50%{background-position:100% 60%}100%{background-position:0% 40%}}
+
+  .sun{position:absolute;top:16%;left:50%;transform:translateX(-50%);width:340px;height:340px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,226,178,.42),rgba(255,226,178,0) 62%);pointer-events:none}
+  .glowline{position:absolute;left:0;right:0;bottom:28%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent)}
+
+  .mark{position:relative;font-family:Georgia,"Times New Roman",serif;color:#fff;font-size:4.6rem;line-height:1;letter-spacing:-1.5px;
+    text-shadow:0 2px 30px rgba(0,0,0,.28)}
+  .kicker{position:relative;color:rgba(255,255,255,.72);font-size:.72rem;letter-spacing:4px;text-transform:uppercase;font-weight:600}
+  .sub{position:relative;color:rgba(255,255,255,.66);font-size:.88rem;margin-top:-6px}
+
+  .field{position:relative;display:flex;flex-direction:column;gap:10px;align-items:center;width:100%;max-width:300px;margin-top:8px}
+  .field input{width:100%;padding:14px 18px;border-radius:14px;font-size:1rem;text-align:center;font-family:inherit;outline:none;
+    color:#fff;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  .field input::placeholder{color:rgba(255,255,255,.55)}
+  .field button{width:100%;padding:13px;border-radius:14px;font-size:.95rem;font-weight:600;font-family:inherit;cursor:pointer;
+    color:#123c52;background:rgba(255,255,255,.92);border:none;transition:transform .16s,background .16s}
+  .field button:hover{background:#fff;transform:translateY(-1px)}
+  .lock{position:relative;color:rgba(255,255,255,.5);font-size:.72rem;letter-spacing:.4px;margin-top:2px}
+
+  .waves{position:absolute;left:0;right:0;bottom:0;width:100%}
+  .tagpill{position:fixed;top:14px;left:14px;background:rgba(0,0,0,.5);color:#fff;font-size:.7rem;padding:6px 12px;border-radius:20px;letter-spacing:1px}
+</style>
+</head>
+<body>
+<div class="tagpill">OPTION A · CINEMATIC</div>
+<div class="stage">
+  <div class="sun"></div>
+  <div class="glowline"></div>
+  <div class="kicker">Imran &amp; Shezila</div>
+  <div class="mark">Trips</div>
+  <div class="sub">Enter password to continue</div>
+  <div class="field">
+    <input type="password" placeholder="Password">
+    <button>Unlock</button>
+  </div>
+  <div class="lock">🔒 Private</div>
+  <svg class="waves" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,70 C240,110 480,110 720,80 C960,50 1200,50 1440,76 L1440,120 L0,120 Z" fill="#0b1b33" opacity=".28"/>
+    <path d="M0,88 C240,120 480,118 720,96 C960,74 1200,74 1440,94 L1440,120 L0,120 Z" fill="#0b1b33" opacity=".5"/>
+  </svg>
+</div>
+</body>
+</html>
