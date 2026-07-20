@@ -167,7 +167,7 @@
     <h1>Trips</h1>
     <div class="sub">Every itinerary in one place — tap a pass to open it</div>
     <div class="flip">
-      <span>1 upcoming</span><span>Imran &amp; Shezila</span>
+      <span id="chip-count">—</span><span>Imran &amp; Shezila</span>
     </div>
   </div>
 </div>
@@ -175,41 +175,7 @@
 <div class="wrap">
 
   <div class="seclbl">Upcoming</div>
-  <div class="tickets">
-
-    <!-- Cayman -->
-    <a class="ticket" href="Cayman_Itinerary_2026.html">
-      <div class="t-stub">
-        <div class="t-top">
-          <div class="t-name">Cayman Islands</div>
-          <div class="t-badge plan">Planning</div>
-        </div>
-        <div class="route" style="margin-top:14px">
-          <div class="pt"><div class="code" style="font-size:1.3rem">DFW</div><div class="city">Dallas</div></div>
-          <div class="dash"></div>
-          <div class="pt" style="text-align:right"><div class="code" style="font-size:1.3rem">GCM</div><div class="city">Grand Cayman</div></div>
-        </div>
-        <div class="t-notch l"></div><div class="t-notch r"></div>
-      </div>
-      <div class="t-body">
-        <div class="t-grid">
-          <div class="t-cell"><div class="k">Dates</div><div class="v">To be confirmed</div></div>
-          <div class="t-cell r"><div class="k">Status</div><div class="v">Planning</div></div>
-        </div>
-        <div class="t-foot">
-          <span class="go">Open itinerary <span class="arw">→</span></span>
-          <span class="seat">2026</span>
-        </div>
-      </div>
-    </a>
-
-    <!-- Add a trip -->
-    <div class="add">
-      <div class="ring">＋</div>
-      <div class="txt">Next trip appears here</div>
-    </div>
-
-  </div>
+  <div class="tickets" id="tickets"></div>
 
   <div class="foot">🔒 Private · One Porch</div>
 
