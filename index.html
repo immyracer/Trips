@@ -3,66 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trips — Imran &amp; Shezila</title>
+<title>Trips</title>
 <style>
   :root {
-    --bg: #f5f6f8; --card: #fff; --border: #e3e5e9; --text: #1c1e21; --muted: #6b7280;
-    --accent: #1a6fa8;
+    --ink: #1b2430;
+    --bg: #f5f2ec;
+    --card: #ffffff;
+    --muted: #837c6f;
+    --line: #e8e2d7;
+    --ocean: #0e7490;
+    --coral: #e77a54;
+    --shadow: 0 1px 2px rgba(27,36,48,.04), 0 8px 24px rgba(27,36,48,.06);
+    --shadow-hover: 0 2px 6px rgba(27,36,48,.06), 0 18px 40px rgba(27,36,48,.14);
+    --display: "Georgia", "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { font-family: var(--sans); background: var(--bg); color: var(--ink); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+  /* ===== TOP WORDMARK ===== */
+  .topbar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 22px; background: rgba(245,242,236,.82); backdrop-filter: saturate(180%) blur(12px); -webkit-backdrop-filter: saturate(180%) blur(12px); border-bottom: 1px solid rgba(232,226,215,.7); }
+  .wordmark { font-family: var(--display); font-size: 1.15rem; font-weight: 700; letter-spacing: .2px; }
+  .wordmark .pin { color: var(--coral); }
+  .topbar .who { font-size: .72rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
 
   /* ===== HERO ===== */
-  .hero { background: linear-gradient(135deg, #0d3b66 0%, #1a6fa8 45%, #0891b2 100%); color: white; padding: 46px 24px 40px; text-align: center; }
-  .hero .eyebrow { text-transform: uppercase; letter-spacing: 2px; font-size: 0.72rem; opacity: 0.7; font-weight: 700; }
-  .hero h1 { font-size: 2.1rem; font-weight: 800; letter-spacing: -0.5px; margin-top: 6px; }
-  .hero .subtitle { opacity: 0.85; margin-top: 8px; font-size: 1rem; }
+  .hero { position: relative; overflow: hidden; color: #fff; padding: 74px 24px 96px; text-align: center;
+    background: linear-gradient(165deg, #15243b 0%, #1c4a5c 42%, #3f8189 66%, #e7a468 100%); }
+  .hero .sun { position: absolute; top: -60px; right: -40px; width: 260px; height: 260px; border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(255,225,175,.55), rgba(255,225,175,0) 62%); pointer-events: none; }
+  .hero .eyebrow { position: relative; font-size: .74rem; letter-spacing: 3.5px; text-transform: uppercase; opacity: .8; font-weight: 600; }
+  .hero h1 { position: relative; font-family: var(--display); font-weight: 700; font-size: 4rem; letter-spacing: -1px; margin: 10px 0 0; line-height: 1; }
+  .hero .tag { position: relative; margin-top: 16px; font-size: 1.02rem; opacity: .9; font-weight: 300; }
+  /* layered wave transition into the page */
+  .hero .waves { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; display: block; }
 
   /* ===== LAYOUT ===== */
-  .wrap { max-width: 860px; margin: 0 auto; padding: 26px 18px 60px; }
-  .section-label { display: flex; align-items: center; gap: 10px; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted); margin: 26px 4px 14px; }
-  .section-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
-  .section-label:first-child { margin-top: 4px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 6px 18px 64px; }
+  .section-label { display: flex; align-items: center; gap: 12px; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin: 34px 4px 16px; }
+  .section-label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .section-label .count { color: var(--ocean); }
 
   /* ===== TRIP CARDS ===== */
-  .trip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-  .trip-card { position: relative; display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; text-decoration: none; color: inherit; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: transform 0.18s, box-shadow 0.18s; }
-  .trip-card:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,0.12); }
-  .trip-card.disabled { pointer-events: none; opacity: 0.72; }
+  .trip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 18px; }
+  .trip-card { position: relative; display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line);
+    border-radius: 18px; overflow: hidden; text-decoration: none; color: inherit; box-shadow: var(--shadow); transition: transform .22s ease, box-shadow .22s ease; }
+  .trip-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
 
-  .tc-cover { height: 112px; display: flex; align-items: center; justify-content: center; font-size: 3rem; position: relative; }
-  .tc-cover.cayman { background: linear-gradient(135deg, #0891b2 0%, #06b6d4 50%, #22d3ee 100%); }
-  .tc-cover.japan  { background: linear-gradient(135deg, #8b1a1a 0%, #c0392b 55%, #1a3a6b 100%); }
-  .tc-cover.blank  { background: linear-gradient(135deg, #94a3b8 0%, #cbd5e1 100%); }
+  .tc-cover { position: relative; height: 150px; overflow: hidden; }
+  .tc-cover svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .tc-badge { position: absolute; top: 12px; right: 12px; z-index: 2; font-size: .64rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    padding: 5px 11px; border-radius: 30px; color: #fff; background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.42);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .tc-place { position: absolute; left: 14px; bottom: 12px; z-index: 2; color: #fff; font-size: .74rem; font-weight: 600; letter-spacing: .3px;
+    display: flex; align-items: center; gap: 6px; text-shadow: 0 1px 6px rgba(0,0,0,.28); }
 
-  .tc-badge { position: absolute; top: 10px; right: 10px; font-size: 0.64rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; padding: 4px 9px; border-radius: 20px; color: #fff; backdrop-filter: blur(2px); }
-  .tc-badge.upcoming { background: rgba(16,122,84,0.92); }
-  .tc-badge.planning { background: rgba(180,110,20,0.92); }
-  .tc-badge.completed { background: rgba(0,0,0,0.45); }
+  .tc-body { padding: 15px 17px 17px; display: flex; flex-direction: column; flex: 1; }
+  .tc-title { font-family: var(--display); font-size: 1.28rem; font-weight: 700; letter-spacing: -.4px; }
+  .tc-dates { font-size: .9rem; font-weight: 600; color: var(--ocean); margin-top: 3px; }
+  .tc-locs { font-size: .82rem; color: var(--muted); margin-top: 6px; }
+  .tc-cta { margin-top: 14px; font-size: .82rem; font-weight: 700; color: var(--ink); display: inline-flex; align-items: center; gap: 6px; }
+  .tc-cta .arw { transition: transform .2s ease; }
+  .trip-card:hover .tc-cta .arw { transform: translateX(4px); }
 
-  .tc-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 3px; flex: 1; }
-  .tc-title { font-size: 1.12rem; font-weight: 800; letter-spacing: -0.3px; }
-  .tc-dates { font-size: 0.9rem; font-weight: 600; color: var(--accent); }
-  .tc-locs { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
-  .tc-cta { margin-top: 12px; font-size: 0.82rem; font-weight: 700; color: var(--accent); }
-  .tc-card.disabled .tc-cta { color: var(--muted); }
+  /* ===== ADD-A-TRIP ===== */
+  .add-card { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 8px;
+    border: 1.5px dashed var(--line); border-radius: 18px; padding: 28px 18px; color: var(--muted); background: rgba(255,255,255,.4); min-height: 200px; }
+  .add-card .ring { width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--muted); }
+  .add-card .at { font-size: .82rem; max-width: 190px; line-height: 1.45; }
 
-  /* ===== ADD-A-TRIP PLACEHOLDER ===== */
-  .add-card { border: 2px dashed var(--border); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 26px 16px; color: var(--muted); background: transparent; min-height: 180px; }
-  .add-card .plus { font-size: 1.8rem; opacity: 0.5; }
-  .add-card .at-text { font-size: 0.82rem; margin-top: 6px; max-width: 200px; }
-
-  .footer-note { text-align: center; color: var(--muted); font-size: 0.78rem; margin-top: 34px; }
+  .footer { text-align: center; color: var(--muted); font-size: .76rem; margin-top: 40px; letter-spacing: .3px; }
 
   /* ===== PASSWORD GATE ===== */
-  #pw-gate { display: none; position: fixed; inset: 0; background: linear-gradient(135deg,#0d3b66,#0891b2); z-index: 99999; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 24px; }
-  #pw-gate .pg-emoji { font-size: 2.2rem; }
-  #pw-gate .pg-title { color: white; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; }
-  #pw-gate .pg-sub { color: rgba(255,255,255,0.7); font-size: 0.85rem; }
-  #pw-gate input { padding: 11px 16px; border-radius: 10px; border: none; font-size: 1rem; width: 100%; max-width: 280px; text-align: center; font-family: inherit; outline: none; }
-  #pw-gate button { background: rgba(255,255,255,0.16); color: white; border: 1px solid rgba(255,255,255,0.32); border-radius: 10px; padding: 10px 34px; font-size: 0.92rem; cursor: pointer; font-family: inherit; font-weight: 600; }
-  #pw-gate button:hover { background: rgba(255,255,255,0.26); }
-  #pw-err { color: #ffb4b4; font-size: 0.8rem; display: none; }
+  #pw-gate { display: none; position: fixed; inset: 0; z-index: 9999; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 24px;
+    background: linear-gradient(165deg, #15243b 0%, #1c4a5c 50%, #3f8189 100%); }
+  #pw-gate .pg-emoji { font-size: 2.1rem; }
+  #pw-gate .pg-title { font-family: var(--display); color: #fff; font-size: 1.6rem; font-weight: 700; letter-spacing: -.3px; }
+  #pw-gate .pg-sub { color: rgba(255,255,255,.72); font-size: .85rem; }
+  #pw-gate input { padding: 12px 16px; border-radius: 12px; border: none; font-size: 1rem; width: 100%; max-width: 290px; text-align: center; font-family: inherit; outline: none; }
+  #pw-gate button { background: rgba(255,255,255,.16); color: #fff; border: 1px solid rgba(255,255,255,.34); border-radius: 12px; padding: 11px 36px; font-size: .92rem; cursor: pointer; font-family: inherit; font-weight: 600; transition: background .18s; }
+  #pw-gate button:hover { background: rgba(255,255,255,.28); }
+  #pw-err { color: #ffc2b3; font-size: .8rem; display: none; }
+
+  @media (max-width: 560px) {
+    .hero { padding: 56px 22px 78px; }
+    .hero h1 { font-size: 3rem; }
+    .topbar .who { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -70,7 +99,7 @@
 <!-- ===== PASSWORD GATE ===== -->
 <div id="pw-gate">
   <div class="pg-emoji">✈️</div>
-  <div class="pg-title">One Porch Trips</div>
+  <div class="pg-title">Trips</div>
   <div class="pg-sub">Enter password to continue</div>
   <input id="pw-input" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')checkPW()">
   <button onclick="checkPW()">Unlock</button>
@@ -89,60 +118,115 @@
 })();
 </script>
 
+<!-- ===== TOP WORDMARK ===== -->
+<div class="topbar">
+  <div class="wordmark">✦ Trips</div>
+  <div class="who">Imran &amp; Shezila</div>
+</div>
+
 <!-- ===== HERO ===== -->
 <div class="hero">
-  <div class="eyebrow">Imran &amp; Shezila</div>
-  <h1>Our Trips</h1>
-  <div class="subtitle">Everything in one place — tap a trip to open its itinerary</div>
+  <div class="sun"></div>
+  <div class="eyebrow">Where we're headed</div>
+  <h1>Trips</h1>
+  <div class="tag">Every journey, in one place — tap a trip to open its itinerary</div>
+  <svg class="waves" viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,54 C240,86 480,86 720,60 C960,34 1200,34 1440,58 L1440,90 L0,90 Z" fill="#f5f2ec" opacity="0.5"/>
+    <path d="M0,66 C240,92 480,92 720,70 C960,48 1200,48 1440,70 L1440,90 L0,90 Z" fill="#f5f2ec"/>
+  </svg>
 </div>
 
 <div class="wrap">
 
   <!-- ===== UPCOMING ===== -->
-  <div class="section-label">Upcoming</div>
+  <div class="section-label">Upcoming <span class="count">·&nbsp;1</span></div>
   <div class="trip-grid">
 
     <!-- Cayman -->
     <a class="trip-card" href="Cayman_Itinerary_2026.html">
-      <div class="tc-cover cayman">🏝️
-        <span class="tc-badge planning">Planning</span>
+      <div class="tc-cover">
+        <svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="cay" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#0d5c73"/><stop offset="0.55" stop-color="#159bad"/><stop offset="1" stop-color="#57cbd0"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="150" fill="url(#cay)"/>
+          <circle cx="322" cy="40" r="26" fill="#ffe6a8" opacity="0.85"/>
+          <!-- water shimmer -->
+          <path d="M0,120 C90,132 150,110 220,120 C300,131 340,116 400,122 L400,150 L0,150 Z" fill="#ffffff" opacity="0.12"/>
+          <path d="M0,132 C100,142 170,126 250,134 C320,141 360,130 400,134 L400,150 L0,150 Z" fill="#ffffff" opacity="0.16"/>
+          <!-- palm -->
+          <g stroke="#0c3b49" stroke-width="5" fill="none" stroke-linecap="round">
+            <path d="M60,150 C58,120 62,100 66,86"/>
+          </g>
+          <g fill="#0c3b49">
+            <path d="M66,84 C48,72 34,74 24,82 C40,80 54,82 66,88 Z"/>
+            <path d="M66,84 C86,74 100,78 108,88 C92,82 78,82 66,88 Z"/>
+            <path d="M66,84 C56,66 44,58 32,58 C48,64 60,74 66,88 Z"/>
+            <path d="M66,84 C78,66 92,60 104,62 C88,66 74,74 66,88 Z"/>
+            <circle cx="66" cy="86" r="4"/>
+          </g>
+        </svg>
+        <span class="tc-badge">Planning</span>
+        <span class="tc-place">📍 Grand Cayman</span>
       </div>
       <div class="tc-body">
-        <div class="tc-title">Cayman Islands 2026</div>
-        <div class="tc-dates">Dates TBD</div>
-        <div class="tc-locs">Grand Cayman · Seven Mile Beach</div>
-        <div class="tc-cta">Open itinerary →</div>
+        <div class="tc-title">Cayman Islands</div>
+        <div class="tc-dates">Dates to be confirmed</div>
+        <div class="tc-locs">Seven Mile Beach · Stingray City · reef snorkeling</div>
+        <div class="tc-cta">Open itinerary <span class="arw">→</span></div>
       </div>
     </a>
 
-    <!-- Add-a-trip placeholder -->
+    <!-- Add-a-trip -->
     <div class="add-card">
-      <div class="plus">＋</div>
-      <div class="at-text">More trips get added here as we plan them.</div>
+      <div class="ring">＋</div>
+      <div class="at">More trips appear here as we plan them.</div>
     </div>
 
   </div>
 
-  <!-- ===== PAST TRIPS ===== -->
+  <!-- ===== PAST ===== -->
   <div class="section-label">Past trips</div>
   <div class="trip-grid">
 
     <!-- Japan -->
     <a class="trip-card" href="Japan_Itinerary_2026.html">
-      <div class="tc-cover japan">🗼
-        <span class="tc-badge completed">Completed</span>
+      <div class="tc-cover">
+        <svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="jpn" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#26335e"/><stop offset="0.6" stop-color="#7d3a55"/><stop offset="1" stop-color="#c15544"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="150" fill="url(#jpn)"/>
+          <circle cx="316" cy="46" r="30" fill="#f2b8a0" opacity="0.5"/>
+          <!-- Mt Fuji -->
+          <path d="M120,150 L210,58 L300,150 Z" fill="#1b2547" opacity="0.9"/>
+          <path d="M188,86 L210,58 L232,86 C224,80 216,82 210,86 C204,82 196,80 188,86 Z" fill="#f3ede8" opacity="0.9"/>
+          <!-- torii -->
+          <g fill="#e9573f">
+            <rect x="44" y="70" width="70" height="7"/>
+            <rect x="48" y="80" width="62" height="5"/>
+            <rect x="54" y="77" width="7" height="73"/>
+            <rect x="97" y="77" width="7" height="73"/>
+          </g>
+        </svg>
+        <span class="tc-badge">Completed</span>
+        <span class="tc-place">📍 Tokyo · Kyoto · Osaka</span>
       </div>
       <div class="tc-body">
-        <div class="tc-title">Japan 2026</div>
+        <div class="tc-title">Japan</div>
         <div class="tc-dates">Jun 16 – 27, 2026</div>
-        <div class="tc-locs">Tokyo · Kyoto · Osaka</div>
-        <div class="tc-cta">Open itinerary →</div>
+        <div class="tc-locs">Tokyo · Kyoto · Osaka · Tokyo</div>
+        <div class="tc-cta">Open itinerary <span class="arw">→</span></div>
       </div>
     </a>
 
   </div>
 
-  <div class="footer-note">🔒 Private · One Porch</div>
+  <div class="footer">🔒 Private · One Porch</div>
 
 </div>
 
