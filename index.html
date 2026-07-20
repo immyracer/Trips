@@ -181,5 +181,84 @@
 
 </div>
 
+<script>
+/* ============================================================
+   TRIPS — the only thing you edit to add or update a trip.
+   Set `date` to the departure date "YYYY-MM-DD" once known.
+   Tiles auto-sort soonest first; undated trips keep the order
+   below and sit after any dated ones.
+   `href` null = tile renders greyed with "Itinerary coming soon".
+   ============================================================ */
+var TRIPS = [
+  { name:'Cayman Islands', to:'GCM', toCity:'Grand Cayman', date:null, href:'Cayman_Itinerary_2026.html' },
+  { name:'Newport Beach',  to:'SNA', toCity:'Orange County', date:null, href:null },
+  { name:'Nashville',      to:'BNA', toCity:'Nashville',     date:null, href:null },
+  { name:'Vail',           to:'EGE', toCity:'Eagle / Vail',  date:null, href:null },
+  { name:'Bahamas',        to:'NAS', toCity:'Nassau',        date:null, href:null },
+  { name:'Paris',          to:'CDG', toCity:'Charles de Gaulle', date:null, href:null },
+  { name:'Turkey',         to:'IST', toCity:'Istanbul',      date:null, href:null }
+];
+
+(function(){
+  var FROM='DFW', FROM_CITY='Dallas';
+
+  function fmt(iso){
+    if(!iso) return 'To be confirmed';
+    var p=iso.split('-'), m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return m[parseInt(p[1],10)-1]+' '+parseInt(p[2],10)+', '+p[0];
+  }
+  function yr(iso){ return iso ? iso.split('-')[0] : '—'; }
+
+  /* dated trips ascending, then undated in declared order */
+  var sorted = TRIPS.map(function(t,i){ return {t:t,i:i}; }).sort(function(a,b){
+    if(a.t.date && b.t.date) return a.t.date < b.t.date ? -1 : (a.t.date > b.t.date ? 1 : a.i-b.i);
+    if(a.t.date) return -1;
+    if(b.t.date) return 1;
+    return a.i-b.i;
+  }).map(function(x){ return x.t; });
+
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  var html = sorted.map(function(t){
+    var live = !!t.href;
+    var open = live
+      ? '<a class="ticket" href="'+esc(t.href)+'">'
+      : '<div class="ticket" style="opacity:.72">';
+    var close = live ? '</a>' : '</div>';
+    var cta = live
+      ? '<span class="go">Open itinerary <span class="arw">&rarr;</span></span>'
+      : '<span class="go" style="color:var(--faint);font-weight:600">Itinerary coming soon</span>';
+    return open+
+      '<div class="t-stub">'+
+        '<div class="t-top">'+
+          '<div class="t-name">'+esc(t.name)+'</div>'+
+          '<div class="t-badge plan">Planning</div>'+
+        '</div>'+
+        '<div class="route" style="margin-top:14px">'+
+          '<div class="pt"><div class="code" style="font-size:1.3rem">'+FROM+'</div><div class="city">'+FROM_CITY+'</div></div>'+
+          '<div class="dash"></div>'+
+          '<div class="pt" style="text-align:right"><div class="code" style="font-size:1.3rem">'+esc(t.to)+'</div><div class="city">'+esc(t.toCity)+'</div></div>'+
+        '</div>'+
+        '<div class="t-notch l"></div><div class="t-notch r"></div>'+
+      '</div>'+
+      '<div class="t-body">'+
+        '<div class="t-grid">'+
+          '<div class="t-cell"><div class="k">Departs</div><div class="v">'+fmt(t.date)+'</div></div>'+
+          '<div class="t-cell r"><div class="k">Status</div><div class="v">Planning</div></div>'+
+        '</div>'+
+        '<div class="t-foot">'+cta+'<span class="seat">'+yr(t.date)+'</span></div>'+
+      '</div>'+
+    close;
+  }).join('');
+
+  html += '<div class="add"><div class="ring">＋</div><div class="txt">Next trip appears here</div></div>';
+
+  document.getElementById('tickets').innerHTML = html;
+  document.getElementById('chip-count').textContent =
+    sorted.length + ' upcoming';
+})();
+</script>
+
 </body>
 </html>
