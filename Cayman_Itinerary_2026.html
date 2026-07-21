@@ -3,88 +3,224 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cayman Islands 2026 — Imran &amp; Shezila</title>
+<title>Cayman Islands 2026</title>
 <style>
-  :root {
-    --cayman: #0891b2; --cayman-light: #e0f7fa;
-    --sand: #b5872a;  --sand-light: #fbf3e0;
-    --flight: #0d3b66; --flight-light: #e6eef7;
-    --bg: #f5f6f8; --card: #fff; --border: #e3e5e9; --text: #1c1e21; --muted: #6b7280;
+  :root{
+    --paper:#fbf9f5; --page:#f4f1ea; --ink:#1b2430; --muted:#6f6a5f; --faint:#9a9384;
+    --line:#e7e1d6; --ocean:#17475c; --teal:#2f6b7d; --coral:#c2643f;
+    --ok:#1f6b4f; --okbg:#e7f0ec; --warn:#96601b; --warnbg:#fbf0e2;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--page);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .mono{font-family:var(--mono)}
 
-  .topbar { background: #fff; border-bottom: 1px solid var(--border); padding: 10px 18px; }
-  .topbar a { color: var(--cayman); text-decoration: none; font-size: 0.85rem; font-weight: 700; }
+  .topbar{background:#fff;border-bottom:1px solid var(--line);padding:11px 18px;position:sticky;top:0;z-index:10}
+  .topbar a{color:var(--teal);text-decoration:none;font-size:.85rem;font-weight:700}
 
-  .hero { background: linear-gradient(135deg, #0d3b66 0%, #0891b2 55%, #22d3ee 100%); color: white; padding: 44px 24px 38px; text-align: center; }
-  .hero h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.5px; }
-  .hero .subtitle { opacity: 0.88; margin-top: 8px; font-size: 1rem; }
-  .hero .dates { margin-top: 14px; font-size: 1.05rem; font-weight: 600; background: rgba(255,255,255,0.16); display: inline-block; padding: 6px 18px; border-radius: 20px; }
+  .head{background:linear-gradient(160deg,#0e2233 0%,#17475c 100%);color:#fff;padding:30px 22px 26px}
+  .head-in{max-width:820px;margin:0 auto}
+  .head .kick{font-family:var(--mono);font-size:.62rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.62)}
+  .head h1{font-family:var(--serif);font-size:2.3rem;letter-spacing:-.5px;margin-top:4px;line-height:1.05}
+  .head .dates{margin-top:12px;font-size:1rem;font-weight:600}
+  .head .quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .head .quick span{font-size:.72rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:5px 10px;border-radius:20px}
 
-  .wrap { max-width: 720px; margin: 0 auto; padding: 40px 20px 60px; text-align: center; }
-  .building { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 34px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-  .building .emoji { font-size: 2.4rem; }
-  .building h2 { font-size: 1.2rem; font-weight: 800; margin-top: 10px; letter-spacing: -0.3px; }
-  .building p { color: var(--muted); font-size: 0.92rem; margin-top: 8px; }
-  .checklist { text-align: left; max-width: 380px; margin: 22px auto 0; display: flex; flex-direction: column; gap: 10px; }
-  .checklist .ci { display: flex; gap: 10px; align-items: flex-start; font-size: 0.9rem; }
-  .checklist .ci .dot { color: var(--cayman); font-weight: 800; }
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px}
+  .sec{margin-top:26px}
+  .sec-h{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
 
-  /* ===== PASSWORD GATE ===== */
-  #pw-gate { display: none; position: fixed; inset: 0; background: linear-gradient(135deg,#0d3b66,#0891b2); z-index: 99999; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 24px; }
-  #pw-gate .pg-emoji { font-size: 2.2rem; }
-  #pw-gate .pg-title { color: white; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; }
-  #pw-gate .pg-sub { color: rgba(255,255,255,0.7); font-size: 0.85rem; }
-  #pw-gate input { padding: 11px 16px; border-radius: 10px; border: none; font-size: 1rem; width: 100%; max-width: 280px; text-align: center; font-family: inherit; outline: none; }
-  #pw-gate button { background: rgba(255,255,255,0.16); color: white; border: 1px solid rgba(255,255,255,0.32); border-radius: 10px; padding: 10px 34px; font-size: 0.92rem; cursor: pointer; font-family: inherit; font-weight: 600; }
-  #pw-err { color: #ffb4b4; font-size: 0.8rem; display: none; }
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:0 1px 3px rgba(27,36,48,.05);margin-bottom:14px}
+  .card.two{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  @media(max-width:620px){ .card.two{grid-template-columns:1fr} }
+
+  /* flight */
+  .fl-tag{display:inline-block;font-family:var(--mono);font-size:.6rem;letter-spacing:1px;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:10px}
+  .fl-route{display:flex;align-items:flex-end;gap:14px}
+  .fl-pt .code{font-family:var(--mono);font-size:1.7rem;font-weight:600;line-height:1}
+  .fl-pt .time{font-size:1.05rem;font-weight:700;margin-top:2px}
+  .fl-pt .city{font-size:.74rem;color:var(--muted)}
+  .fl-mid{flex:1;text-align:center;padding-bottom:6px}
+  .fl-mid .line{height:1px;background:var(--line);position:relative;margin:0 4px}
+  .fl-mid .line::after{content:"✈";position:absolute;left:50%;top:-9px;transform:translateX(-50%);font-size:.85rem;color:var(--teal);background:var(--paper);padding:0 6px}
+  .fl-mid .dur{font-size:.66rem;color:var(--faint);margin-top:6px}
+  .fl-meta{display:flex;flex-wrap:wrap;gap:x;gap:18px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+  .fl-meta div{font-size:.8rem}
+  .fl-meta .k{font-family:var(--mono);font-size:.56rem;letter-spacing:.8px;text-transform:uppercase;color:var(--faint)}
+  .fl-meta .v{font-weight:600}
+
+  /* generic detail rows */
+  .rows{width:100%;border-collapse:collapse}
+  .rows td{padding:7px 0;font-size:.9rem;vertical-align:top;border-bottom:1px solid var(--line)}
+  .rows tr:last-child td{border-bottom:none}
+  .rows td.k{color:var(--muted);width:38%;font-size:.82rem}
+  .rows td.v{font-weight:600;text-align:right}
+  .rows td.v a{color:var(--teal)}
+
+  .pill{display:inline-block;font-size:.64rem;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.5px}
+  .pill.ok{background:var(--okbg);color:var(--ok)}
+  .pill.warn{background:var(--warnbg);color:var(--warn)}
+
+  .note{background:#fff;border:1px solid var(--line);border-left:3px solid var(--coral);border-radius:0 10px 10px 0;padding:12px 14px;font-size:.84rem;color:var(--muted);margin-bottom:14px}
+  .note b{color:var(--ink)}
+
+  .card h3{font-family:var(--serif);font-size:1.2rem;margin-bottom:4px}
+  .card .sub{font-size:.82rem;color:var(--muted);margin-bottom:12px}
+
+  .soon{background:var(--paper);border:1.5px dashed var(--line);border-radius:14px;padding:26px 20px;text-align:center;color:var(--muted)}
+  .soon .big{font-size:1.4rem}
+  .soon .t{font-weight:700;color:var(--ink);margin-top:8px;font-family:var(--serif);font-size:1.1rem}
+  .soon .d{font-size:.85rem;margin-top:4px}
+
+  .foot{text-align:center;margin-top:34px;font-family:var(--mono);font-size:.6rem;color:var(--faint)}
+
+  /* gate */
+  #gate{position:fixed;inset:0;z-index:999;display:none;align-items:center;justify-content:center;padding:24px;background:linear-gradient(190deg,#0e2233,#17475c 60%,#3d8391)}
+  #gate .box{background:var(--paper);border-radius:16px;padding:26px 24px;max-width:320px;width:100%;text-align:center;box-shadow:0 22px 60px rgba(0,0,0,.35)}
+  #gate .box .e{font-size:1.8rem}
+  #gate .box h2{font-family:var(--serif);font-size:1.3rem;margin-top:6px}
+  #gate .box p{font-size:.8rem;color:var(--muted);margin:6px 0 14px}
+  #gate input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;text-align:center;font-size:1rem;font-family:inherit;outline:none}
+  #gate input:focus{border-color:var(--teal)}
+  #gate button{width:100%;margin-top:10px;padding:12px;border:none;border-radius:10px;background:var(--ink);color:var(--paper);font-weight:600;font-size:.92rem;cursor:pointer;font-family:inherit}
+  #gate .err{color:#b8442f;font-size:.76rem;margin-top:9px;display:none}
 </style>
 </head>
 <body>
 
-<!-- ===== PASSWORD GATE ===== -->
-<div id="pw-gate">
-  <div class="pg-emoji">🏝️</div>
-  <div class="pg-title">Cayman Islands 2026</div>
-  <div class="pg-sub">Enter password to continue</div>
-  <input id="pw-input" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')checkPW()">
-  <button onclick="checkPW()">Unlock</button>
-  <div id="pw-err">Incorrect password — try again</div>
+<div id="gate">
+  <div class="box">
+    <div class="e">🏝️</div>
+    <h2>Cayman Islands</h2>
+    <p>Enter password to continue</p>
+    <input id="pw" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')unlock()">
+    <button onclick="unlock()">Unlock</button>
+    <div class="err" id="err">Incorrect password — try again</div>
+  </div>
 </div>
 <script>
 (function(){
-  var PW='oneporch', SK='oneporch_auth';
-  function checkPW(){
-    var v=document.getElementById('pw-input').value;
-    if(v===PW){ localStorage.setItem(SK,'1'); document.getElementById('pw-gate').style.display='none'; document.body.style.overflow=''; }
-    else{ document.getElementById('pw-err').style.display='block'; document.getElementById('pw-input').value=''; }
-  }
-  window.checkPW=checkPW;
-  if(localStorage.getItem(SK)!=='1'){ document.getElementById('pw-gate').style.display='flex'; document.body.style.overflow='hidden'; }
+  var PW='oneporch',SK='oneporch_auth';
+  function unlock(){var v=document.getElementById('pw').value;
+    if(v===PW){localStorage.setItem(SK,'1');document.getElementById('gate').style.display='none';document.body.style.overflow='';}
+    else{document.getElementById('err').style.display='block';document.getElementById('pw').value='';}}
+  window.unlock=unlock;
+  if(localStorage.getItem(SK)!=='1'){document.getElementById('gate').style.display='flex';document.body.style.overflow='hidden';}
 })();
 </script>
 
 <div class="topbar"><a href="index.html">← All trips</a></div>
 
-<div class="hero">
-  <h1>🏝️ Cayman Islands 2026</h1>
-  <div class="subtitle">Imran &amp; Shezila · Grand Cayman</div>
-  <div class="dates">Dates to be confirmed</div>
+<div class="head">
+  <div class="head-in">
+    <div class="kick">Trip · Grand Cayman</div>
+    <h1>Cayman Islands</h1>
+    <div class="dates">Thursday, July 30 – Sunday, August 2, 2026 · 4 nights</div>
+    <div class="quick">
+      <span>✈ AA 355 nonstop</span>
+      <span>🏠 Seven Mile Beach</span>
+      <span>🚐 9-seater</span>
+      <span>👥 See headcount note</span>
+    </div>
+  </div>
 </div>
 
 <div class="wrap">
-  <div class="building">
-    <div class="emoji">🛠️</div>
-    <h2>Itinerary in progress</h2>
-    <p>We're putting this one together now. Here's what it will include once the details are locked in:</p>
-    <div class="checklist">
-      <div class="ci"><span class="dot">✈</span> Flights — outbound &amp; return, seats, times</div>
-      <div class="ci"><span class="dot">🏨</span> Resort &amp; check-in / check-out</div>
-      <div class="ci"><span class="dot">🗓️</span> Day-by-day plan (beaches, Stingray City, dining)</div>
-      <div class="ci"><span class="dot">🛂</span> Arrival &amp; customs notes</div>
+
+  <!-- FLIGHTS -->
+  <div class="sec">
+    <div class="sec-h">Flights · Confirmation DUJYWI · Ticketed</div>
+
+    <div class="card">
+      <span class="fl-tag">Outbound · Thu Jul 30, 2026 · AA 355 · Economy</span>
+      <div class="fl-route">
+        <div class="fl-pt"><div class="code">DFW</div><div class="time">10:14 AM</div><div class="city">Dallas/Fort Worth</div></div>
+        <div class="fl-mid"><div class="line"></div><div class="dur">3h 22m · nonstop</div></div>
+        <div class="fl-pt" style="text-align:right"><div class="code">GCM</div><div class="time">1:36 PM</div><div class="city">Grand Cayman</div></div>
+      </div>
+      <div class="fl-meta">
+        <div><div class="k">Aircraft</div><div class="v">Boeing 737-800</div></div>
+        <div><div class="k">Seats</div><div class="v">23F · 23E · 23D · 24D · 24F</div></div>
+        <div><div class="k">Meal</div><div class="v">Food for purchase</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="fl-tag">Return · Sun Aug 2, 2026 · AA 355 · Economy</span>
+      <div class="fl-route">
+        <div class="fl-pt"><div class="code">GCM</div><div class="time">2:41 PM</div><div class="city">Grand Cayman</div></div>
+        <div class="fl-mid"><div class="line"></div><div class="dur">3h 49m · nonstop</div></div>
+        <div class="fl-pt" style="text-align:right"><div class="code">DFW</div><div class="time">6:30 PM</div><div class="city">Dallas/Fort Worth</div></div>
+      </div>
+      <div class="fl-meta">
+        <div><div class="k">Seats</div><div class="v">21F · 21E · 21D · 22D · 22F</div></div>
+        <div><div class="k">Meal</div><div class="v">Food for purchase</div></div>
+      </div>
     </div>
   </div>
+
+  <!-- STAY -->
+  <div class="sec">
+    <div class="sec-h">Where you're staying</div>
+    <div class="card">
+      <h3>Botanica Cayman · Luxury Cottage</h3>
+      <div class="sub">Seven Mile Beach · 3 bed / 2 bath · private access · Airbnb</div>
+      <table class="rows">
+        <tr><td class="k">Check-in</td><td class="v">Thu, Jul 30 · 4:00 PM</td></tr>
+        <tr><td class="k">Checkout</td><td class="v">Sun, Aug 2 · 11:00 AM</td></tr>
+        <tr><td class="k">Address</td><td class="v">22 Swift Lane, West Bay,<br>Seven Mile Beach</td></tr>
+        <tr><td class="k">Host</td><td class="v">Stephen (co-host: Botanica Team)</td></tr>
+        <tr><td class="k">Confirmation</td><td class="v mono">HMMAKNBPDJ</td></tr>
+        <tr><td class="k">Booked for</td><td class="v">4 guests + 3 children</td></tr>
+        <tr><td class="k">Total</td><td class="v">$4,069.69</td></tr>
+        <tr><td class="k">Cancellation</td><td class="v">Partial refund before 4:00 PM Jul 23,<br>then non-refundable</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- GROUND -->
+  <div class="sec">
+    <div class="sec-h">Getting around</div>
+    <div class="note">⚠ <b>Car is a booking request, not yet confirmed.</b> Marshall's replied that they'll follow up — confirm before you rely on it. Contact: +1 (345) 949-0550 · reservations@marshalls.ky</div>
+    <div class="card">
+      <h3>Marshall's Rent-a-Car <span class="pill warn">Pending</span></h3>
+      <div class="sub">Hyundai 9-seater or similar · automatic · A/C · seats 9, 6 bags</div>
+      <table class="rows">
+        <tr><td class="k">Pick up</td><td class="v">Thu, Jul 30 · 2:00 PM</td></tr>
+        <tr><td class="k">Drop off</td><td class="v">Sun, Aug 2 · 2:00 PM</td></tr>
+        <tr><td class="k">Location</td><td class="v">Airport Rental Plaza,<br>257 Owen Roberts Dr, George Town</td></tr>
+        <tr><td class="k">Request #</td><td class="v mono">120092</td></tr>
+        <tr><td class="k">Total</td><td class="v">US$289.50</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- TRAVELERS -->
+  <div class="sec">
+    <div class="sec-h">Travelers</div>
+    <div class="note"><b>Headcount to confirm.</b> Flight reservation lists <b>5</b> (below); Airbnb is booked for <b>7</b> (4 guests + 3 children); car seats 9. Confirm the final group size so the itinerary is accurate.</div>
+    <div class="card">
+      <table class="rows">
+        <tr><td class="k">On flight DUJYWI</td><td class="v">Imran Noorani · Arissa Noorani · Lana Noorani · Kayden Noorani · Shezila Ali</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- DAY BY DAY -->
+  <div class="sec">
+    <div class="sec-h">Day by day</div>
+    <div class="soon">
+      <div class="big">🗓️</div>
+      <div class="t">Activities coming</div>
+      <div class="d">Send the plans and I'll lay out each day with coordinated timings.</div>
+    </div>
+  </div>
+
+  <div class="foot">🔒 Private · One Porch · flights &amp; stay confirmed · car pending</div>
+
 </div>
 
 </body>
