@@ -202,10 +202,22 @@ var TRIPS = [
 (function(){
   var FROM='DFW', FROM_CITY='Dallas';
 
+  var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   function fmt(iso){
     if(!iso) return 'To be confirmed';
-    var p=iso.split('-'), m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    return m[parseInt(p[1],10)-1]+' '+parseInt(p[2],10)+', '+p[0];
+    var p=iso.split('-');
+    return M[parseInt(p[1],10)-1]+' '+parseInt(p[2],10)+', '+p[0];
+  }
+  /* full trip range, e.g. "Jul 30 – Aug 2, 2026" (drops repeated year/month) */
+  function fmtRange(a,b){
+    if(!a) return 'To be confirmed';
+    if(!b) return fmt(a);
+    var pa=a.split('-'), pb=b.split('-');
+    var ma=M[parseInt(pa[1],10)-1], da=parseInt(pa[2],10), ya=pa[0];
+    var mb=M[parseInt(pb[1],10)-1], db=parseInt(pb[2],10), yb=pb[0];
+    if(ya!==yb) return ma+' '+da+', '+ya+' – '+mb+' '+db+', '+yb;
+    if(ma!==mb) return ma+' '+da+' – '+mb+' '+db+', '+yb;
+    return ma+' '+da+' – '+db+', '+yb;
   }
   function yr(iso){ return iso ? iso.split('-')[0] : '—'; }
 
