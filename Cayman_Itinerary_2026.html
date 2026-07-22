@@ -258,18 +258,158 @@
   </div>
 
   <!-- DAY BY DAY -->
-  <div class="sec">
+  <div class="sec" id="daybyday">
     <div class="sec-h">Day by day</div>
-    <div class="soon">
-      <div class="big">🗓️</div>
-      <div class="t">Activities coming</div>
-      <div class="d">Send the plans and I'll lay out each day with coordinated timings.</div>
-    </div>
+    <div id="days"></div>
   </div>
 
   <div class="foot">🔒 Private · One Porch · flights &amp; stay confirmed · car pending</div>
 
 </div>
+
+<script>
+/* ============================================================
+   DAYS — add activities here as plans firm up.
+   Each activity: { t:'time', n:'name', d:'description (optional)' }
+   Keys for the done-state are generated from day + position,
+   so keep existing items in place when adding new ones.
+   ============================================================ */
+var DAYS = [
+  {
+    label:'Thu', date:'Jul 30', title:'Arrival — Grand Cayman',
+    acts:[
+      { t:'10:14 AM', n:'Depart DFW — AA 355', d:'Seats 23F · 23E · 23D · 24D · 24F. Boeing 737-800, 3h 22m nonstop.' },
+      { t:'1:36 PM',  n:'Land at Owen Roberts (GCM)', d:'Clear immigration and customs, collect bags.' },
+      { t:'2:00 PM',  n:'Pick up rental car — Marshall’s', d:'⚠ Still a booking request (#120092) — confirm before arrival. Airport Rental Plaza, 257 Owen Roberts Dr. On exiting arrivals, turn left and follow signs to the Rental Plaza. +1 (345) 949-0550.' },
+      { t:'4:00 PM',  n:'Check in — Botanica Cayman cottage', d:'22 Swift Lane, West Bay, Seven Mile Beach. Reach out to host Stephen for check-in instructions.' }
+    ]
+  },
+  {
+    label:'Fri', date:'Jul 31', title:'Seven Mile Beach', acts:[]
+  },
+  {
+    label:'Sat', date:'Aug 1', title:'Full day', acts:[]
+  },
+  {
+    label:'Sun', date:'Aug 2', title:'Departure — home',
+    acts:[
+      { t:'11:00 AM', n:'Check out of the cottage', d:'Latest checkout. Flight isn’t until 2:41 PM — time for a last beach morning.' },
+      { t:'2:00 PM',  n:'Return rental car', d:'Airport Rental Plaza, 257 Owen Roberts Dr, George Town.' },
+      { t:'2:41 PM',  n:'Depart GCM — AA 355', d:'Seats 21F · 21E · 21D · 22D · 22F. 3h 49m nonstop.' },
+      { t:'6:30 PM',  n:'Arrive DFW', d:'Home.' }
+    ]
+  }
+];
+
+(function(){
+  var SKEY='cayman2026_done';
+  function load(){ try{ return JSON.parse(localStorage.getItem(SKEY)||'{}'); }catch(e){ return {}; } }
+  function save(o){ try{ localStorage.setItem(SKEY,JSON.stringify(o)); }catch(e){} }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  var done=load();
+  function keyFor(di,ai){ return 'd'+di+'a'+ai; }
+
+  /* ---------- build ---------- */
+  var bar='', body='';
+  DAYS.forEach(function(day,di){
+    bar+='<button class="daytile" id="tile'+di+'" onclick="goDay('+di+')">'+
+           '<div class="dt-n">Day '+(di+1)+'</div>'+
+           '<div class="dt-d">'+esc(day.date)+'</div>'+
+           '<div class="dt-p" id="prog'+di+'"></div>'+
+         '</button>';
+
+    var acts = day.acts.length
+      ? day.acts.map(function(a,ai){
+          var k=keyFor(di,ai), isDone=!!done[k];
+          return '<div class="act'+(isDone?' done':'')+'" id="act'+k+'">'+
+            '<button class="actchk'+(isDone?' on':'')+'" onclick="toggleAct(\''+k+'\')" aria-label="Mark complete">✓</button>'+
+            '<div class="actmain">'+
+              (a.t?'<div class="acttime">'+esc(a.t)+'</div>':'')+
+              '<div class="actname">'+esc(a.n)+'</div>'+
+              (a.d?'<div class="actdesc">'+esc(a.d)+'</div>':'')+
+            '</div></div>';
+        }).join('')
+      : '<div class="emptyday">No activities added yet — send me the plans and I’ll fill this day in.</div>';
+
+    body+='<div class="dcard" id="day'+di+'">'+
+        '<button class="dhead" onclick="toggleDay('+di+')" id="head'+di+'">'+
+          '<span class="dnum">Day '+(di+1)+'</span>'+
+          '<h3>'+esc(day.label)+', '+esc(day.date)+' — '+esc(day.title)+'</h3>'+
+          '<span class="dprog" id="hprog'+di+'"></span>'+
+          '<span class="chev">▼</span>'+
+        '</button>'+
+        '<div class="dbody" id="bodyd'+di+'">'+acts+'</div>'+
+      '</div>';
+  });
+
+  document.getElementById('days').innerHTML =
+    '<div class="daybar" id="daybar">'+bar+'</div>'+body;
+
+  /* ---------- progress + next ---------- */
+  function refresh(){
+    DAYS.forEach(function(day,di){
+      var total=day.acts.length, n=0;
+      for(var ai=0;ai<total;ai++){ if(done[keyFor(di,ai)]) n++; }
+      var txt = total ? (n+'/'+total) : '—';
+      document.getElementById('prog'+di).textContent = txt;
+      document.getElementById('hprog'+di).textContent = total ? (n+' of '+total+' done') : 'to plan';
+      document.getElementById('tile'+di).classList.toggle('alldone', total>0 && n===total);
+    });
+    /* mark the first unfinished activity across the whole trip as NEXT */
+    var old=document.querySelector('.nextbadge'); if(old) old.parentNode.removeChild(old);
+    outer:
+    for(var di=0;di<DAYS.length;di++){
+      for(var ai=0;ai<DAYS[di].acts.length;ai++){
+        var k=keyFor(di,ai);
+        if(!done[k]){
+          var el=document.getElementById('act'+k);
+          if(el){ var nm=el.querySelector('.actname');
+            var b=document.createElement('span'); b.className='nextbadge'; b.textContent='UP NEXT';
+            nm.appendChild(b); }
+          break outer;
+        }
+      }
+    }
+  }
+
+  window.toggleAct=function(k){
+    done[k]=!done[k];
+    if(!done[k]) delete done[k];
+    save(done);
+    var el=document.getElementById('act'+k);
+    if(el){ el.classList.toggle('done', !!done[k]);
+      el.querySelector('.actchk').classList.toggle('on', !!done[k]); }
+    refresh();
+  };
+
+  window.toggleDay=function(di){
+    var h=document.getElementById('head'+di), b=document.getElementById('bodyd'+di);
+    var isOpen=h.classList.contains('open');
+    for(var i=0;i<DAYS.length;i++){
+      document.getElementById('head'+i).classList.remove('open');
+      document.getElementById('bodyd'+i).classList.remove('open');
+      document.getElementById('tile'+i).classList.remove('active');
+    }
+    if(!isOpen){ h.classList.add('open'); b.classList.add('open');
+      document.getElementById('tile'+di).classList.add('active'); }
+  };
+
+  window.goDay=function(di){
+    var h=document.getElementById('head'+di);
+    if(!h.classList.contains('open')) window.toggleDay(di);
+    else document.getElementById('tile'+di).classList.add('active');
+    var card=document.getElementById('day'+di);
+    var top=card.getBoundingClientRect().top+window.pageYOffset-70;
+    window.scrollTo({top:top,behavior:'smooth'});
+  };
+
+  /* open day 1 by default */
+  window.toggleDay(0);
+  refresh();
+})();
+</script>
 
 </body>
 </html>
