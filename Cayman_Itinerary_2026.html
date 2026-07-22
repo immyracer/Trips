@@ -70,6 +70,54 @@
   .card h3{font-family:var(--serif);font-size:1.2rem;margin-bottom:4px}
   .card .sub{font-size:.82rem;color:var(--muted);margin-bottom:12px}
 
+  /* ===== DAY TABS (sticky) ===== */
+  .daybar{position:sticky;top:0;z-index:60;display:flex;gap:8px;overflow-x:auto;padding:11px 14px;background:rgba(251,249,245,.94);
+    backdrop-filter:saturate(180%) blur(10px);-webkit-backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line);
+    scrollbar-width:none;scroll-snap-type:x mandatory;justify-content:center}
+  .daybar::-webkit-scrollbar{display:none}
+  .daytile{scroll-snap-align:center;flex-shrink:0;min-width:78px;border:1.5px solid var(--line);background:#fff;border-radius:11px;
+    padding:7px 11px;cursor:pointer;text-align:center;font-family:inherit;transition:all .18s;-webkit-appearance:none;appearance:none}
+  .daytile .dt-n{font-family:var(--mono);font-size:.55rem;letter-spacing:1px;text-transform:uppercase;color:var(--faint)}
+  .daytile .dt-d{font-size:.8rem;font-weight:700;margin-top:1px}
+  .daytile .dt-p{font-family:var(--mono);font-size:.5rem;color:var(--faint);margin-top:2px}
+  .daytile:hover{border-color:var(--teal)}
+  .daytile.active{border-color:var(--ocean);background:var(--ocean);color:#fff}
+  .daytile.active .dt-n,.daytile.active .dt-p{color:rgba(255,255,255,.72)}
+  .daytile.alldone .dt-p{color:var(--ok)}
+  .daytile.active.alldone .dt-p{color:#9fe6c4}
+
+  /* ===== DAY CARDS ===== */
+  .dcard{background:var(--paper);border:1px solid var(--line);border-radius:14px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 3px rgba(27,36,48,.05)}
+  .dhead{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;user-select:none;background:#fff;border:none;width:100%;font-family:inherit;text-align:left;color:inherit}
+  .dhead:hover{background:#fdfcfa}
+  .dhead .dnum{font-family:var(--mono);font-size:.56rem;letter-spacing:.8px;text-transform:uppercase;background:var(--ocean);color:#fff;padding:3px 9px;border-radius:20px;white-space:nowrap}
+  .dhead h3{font-family:var(--serif);font-size:1.05rem;flex:1;font-weight:700}
+  .dhead .dprog{font-family:var(--mono);font-size:.56rem;color:var(--faint);white-space:nowrap}
+  .dhead .chev{font-size:.75rem;color:var(--faint);transition:transform .25s}
+  .dhead.open .chev{transform:rotate(180deg)}
+  .dbody{display:none;padding:4px 18px 16px;border-top:1px solid var(--line)}
+  .dbody.open{display:block}
+
+  /* ===== ACTIVITIES ===== */
+  .act{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+  .act:last-child{border-bottom:none}
+  .actchk{flex-shrink:0;width:23px;height:23px;border-radius:50%;border:2px solid #cfc8bb;background:#fff;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-size:.72rem;color:transparent;transition:all .18s;margin-top:2px;
+    -webkit-appearance:none;appearance:none;font-family:inherit;padding:0}
+  .actchk:hover{border-color:var(--ok);background:#f2f9f5}
+  .actchk.on{border-color:var(--ok);background:var(--ok);color:#fff}
+  .actmain{flex:1;min-width:0}
+  .acttime{font-family:var(--mono);font-size:.6rem;letter-spacing:.6px;color:var(--teal);font-weight:700}
+  .actname{font-weight:600;font-size:.95rem;margin-top:1px}
+  .actdesc{font-size:.83rem;color:var(--muted);margin-top:3px}
+  .act.done .actname{text-decoration:line-through;opacity:.42}
+  .act.done .acttime{opacity:.42}
+  .act.done .actdesc{display:none}
+  .nextbadge{display:inline-block;font-family:var(--mono);font-size:.5rem;letter-spacing:.8px;background:var(--warnbg);color:var(--warn);
+    padding:2px 7px;border-radius:20px;margin-left:7px;vertical-align:1px}
+  .act.done .nextbadge{display:none}
+  .emptyday{font-size:.85rem;color:var(--muted);padding:14px 0;font-style:italic}
+
   .soon{background:var(--paper);border:1.5px dashed var(--line);border-radius:14px;padding:26px 20px;text-align:center;color:var(--muted)}
   .soon .big{font-size:1.4rem}
   .soon .t{font-weight:700;color:var(--ink);margin-top:8px;font-family:var(--serif);font-size:1.1rem}
